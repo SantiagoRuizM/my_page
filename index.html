@@ -168,9 +168,8 @@
       position:absolute;inset:0;
       width:100%;height:100%;
       object-fit:cover;
-      display:none;
+      display:block;
     }
-    .banner-has .banner-img{display:block}
 
     /* Gradient vignette over banner */
     .banner-vignette{
@@ -180,24 +179,6 @@
         linear-gradient(to right,rgba(4,4,14,.6) 0%,transparent 35%);
       z-index:2;pointer-events:none;
     }
-
-    /* Upload hint */
-    .banner-hint{
-      position:absolute;inset:0;z-index:4;
-      display:flex;flex-direction:column;
-      align-items:center;justify-content:center;
-      gap:.5rem;
-      font-family:'Cinzel',serif;
-      font-size:.7rem;
-      letter-spacing:.24em;
-      text-transform:uppercase;
-      color:var(--muted);
-      cursor:pointer;
-      transition:opacity .3s;
-    }
-    .banner-hint .hi{font-size:1.5rem;opacity:.2}
-    .banner-has .banner-hint{opacity:0}
-    .banner-has:hover .banner-hint{opacity:1;background:rgba(0,0,0,.4)}
 
     /* Name inside banner (bottom) */
     .banner-text{
@@ -244,7 +225,6 @@
       box-shadow:0 0 22px var(--glow),0 0 55px var(--glow-sm),
                  inset 0 0 18px rgba(0,0,0,.6);
       overflow:hidden;
-      cursor:pointer;
       background:var(--card);
       transition:box-shadow .3s;
       animation:borderGlow 4s ease-in-out infinite;
@@ -253,21 +233,8 @@
     .profile-photo img{
       width:100%;height:100%;
       object-fit:cover;
-      display:none;
+      display:block;
     }
-    .profile-photo.has-image img{display:block}
-    .photo-hint{
-      position:absolute;inset:0;
-      display:flex;flex-direction:column;
-      align-items:center;justify-content:center;gap:.4rem;
-      font-family:'Inter',sans-serif;
-      font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
-      color:var(--muted);
-      transition:opacity .3s;
-    }
-    .photo-hint .hi{font-size:1.6rem;opacity:.2}
-    .profile-photo.has-image .photo-hint{opacity:0}
-    .profile-photo.has-image:hover .photo-hint{opacity:1;background:rgba(4,4,14,.65)}
 
     /* Contact bar below banner */
     .contact-bar{
@@ -587,13 +554,11 @@
   <div class="hero-wrap">
 
     <!-- Big banner -->
-    <div class="hero-banner" id="hero-banner"
-         onclick="document.getElementById('banner-input').click()"
-         title="Click to upload banner image">
+    <div class="hero-banner" id="hero-banner">
 
       <!-- Clipped background layer (image + vignette + grid + scan-line) -->
       <div class="banner-bg">
-        <img class="banner-img" id="banner-img" alt="Banner" />
+        <img class="banner-img" src="images/banner.png" alt="Banner" />
         <div class="banner-vignette"></div>
         <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.04;z-index:1;pointer-events:none" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -605,11 +570,6 @@
         </svg>
       </div>
 
-      <div class="banner-hint" id="banner-hint">
-        <span class="hi">⬡</span>
-        <span>Upload Banner</span>
-      </div>
-
       <!-- Name overlaid at bottom of banner -->
       <div class="banner-text hero-load d2">
         <h1 class="name">Santiago Ruiz</h1>
@@ -617,20 +577,11 @@
       </div>
 
       <!-- Profile photo hanging over bottom edge -->
-      <div class="profile-photo hero-load d1" id="profile-photo"
-           onclick.stop=""
-           title="Click to upload your photo">
-        <img id="photo-img" alt="Santiago Ruiz" />
-        <div class="photo-hint">
-          <span class="hi">◈</span>
-          <span>Photo</span>
-        </div>
+      <div class="profile-photo hero-load d1">
+        <img src="images/face.png" alt="Santiago Ruiz" />
       </div>
 
     </div><!-- /.hero-banner -->
-
-    <input type="file" id="banner-input" accept="image/*" style="display:none" />
-    <input type="file" id="photo-input"  accept="image/*" style="display:none" />
 
     <!-- Contact bar (below banner) -->
     <div class="contact-bar hero-load d3">
@@ -890,65 +841,6 @@
   init();
   requestAnimationFrame(draw);
 })();
-
-/* ── Image uploads ── */
-function wireUpload(inputId, imgId, containerId, cls, stopBubble){
-  const input = document.getElementById(inputId);
-  const container = document.getElementById(containerId);
-
-  if(stopBubble){
-    // Photo click should NOT trigger banner click
-    document.getElementById('profile-photo').addEventListener('click', e=>{
-      e.stopPropagation();
-      input.click();
-    });
-  } else {
-    container.addEventListener('click', ()=>input.click());
-  }
-
-  input.addEventListener('change', function(e){
-    const file = e.target.files[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      document.getElementById(imgId).src = ev.target.result;
-      document.getElementById(containerId).classList.add(cls);
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-// Banner: clicking banner triggers banner upload
-// Photo: clicking photo triggers photo upload (stops propagation to banner)
-document.getElementById('hero-banner').addEventListener('click', ()=>{
-  document.getElementById('banner-input').click();
-});
-document.getElementById('profile-photo').addEventListener('click', e=>{
-  e.stopPropagation();
-  document.getElementById('photo-input').click();
-});
-
-document.getElementById('banner-input').addEventListener('change', function(e){
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    document.getElementById('banner-img').src = ev.target.result;
-    document.getElementById('hero-banner').classList.add('banner-has');
-  };
-  reader.readAsDataURL(file);
-});
-
-document.getElementById('photo-input').addEventListener('change', function(e){
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    document.getElementById('photo-img').src = ev.target.result;
-    document.getElementById('profile-photo').classList.add('has-image');
-  };
-  reader.readAsDataURL(file);
-});
 
 /* ── Scroll reveal (IntersectionObserver) ── */
 const revealObs = new IntersectionObserver((entries)=>{

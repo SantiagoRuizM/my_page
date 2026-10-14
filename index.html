@@ -258,7 +258,7 @@
     .axis {
       position: relative; padding: 22px 24px 22px 74px;
       border: 1px solid var(--line-2); border-radius: var(--radius);
-      background: var(--surface); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      background: var(--surface);
       transition: border-color .3s, transform .4s var(--ease);
     }
     .axis:hover { border-color: var(--line); transform: translateX(6px); }
@@ -284,7 +284,7 @@
     .job-card {
       position: relative; margin-left: 36px; padding: 26px 30px;
       border: 1px solid var(--line-2); border-radius: var(--radius);
-      background: var(--surface); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      background: var(--surface);
       transition: border-color .3s, background .3s;
     }
     .job-card:hover { border-color: var(--line); background: var(--surface-2); }
@@ -325,7 +325,6 @@
       padding: 26px; border-radius: var(--radius);
       border: 1px solid var(--line-2);
       background: var(--surface);
-      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
       overflow: hidden; isolation: isolate;
       transition: border-color .3s, transform .5s var(--ease), opacity .4s;
       min-height: 260px;
@@ -367,7 +366,6 @@
     .teach-card {
       position: relative; padding: 28px; border-radius: var(--radius);
       border: 1px solid var(--line-2); background: var(--surface);
-      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
     }
     .teach-card.big { grid-column: span 2; background: linear-gradient(135deg, rgba(91, 92, 246, .16), rgba(18, 18, 38, .55) 60%); border-color: rgba(91, 92, 246, .25); }
     .teach-when { font-family: var(--mono); font-size: 12px; color: var(--gold); margin-bottom: 14px; }
@@ -378,7 +376,7 @@
 
     /* ───────── Skills ───────── */
     .skills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-    .skill-col { padding: 26px; border-radius: var(--radius); border: 1px solid var(--line-2); background: var(--surface); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+    .skill-col { padding: 26px; border-radius: var(--radius); border: 1px solid var(--line-2); background: var(--surface); }
     .skill-col h3 { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; margin-bottom: 18px; }
     .skill-col h3 span { font-family: var(--mono); font-size: 11px; color: var(--dim); font-weight: 400; }
     .skill-col ul { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
@@ -387,7 +385,7 @@
 
     /* ───────── Education ───────── */
     .edu { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; }
-    .edu-list, .cert-list { border-radius: var(--radius); border: 1px solid var(--line-2); background: var(--surface); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); overflow: hidden; }
+    .edu-list, .cert-list { border-radius: var(--radius); border: 1px solid var(--line-2); background: var(--surface); overflow: hidden; }
     .edu-row, .cert-row { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 22px 26px; border-bottom: 1px solid var(--line-2); }
     .edu-row:last-child, .cert-row:last-child { border-bottom: 0; }
     .edu-deg { font-family: var(--serif); font-size: 26px; line-height: 1.15; }
@@ -441,9 +439,9 @@
     .dat {
       position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 20px;
       background: rgba(3, 3, 9, .86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      opacity: 0; pointer-events: none; transition: opacity .5s var(--ease);
+      opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .5s var(--ease), visibility 0s linear .5s;
     }
-    .dat.open { opacity: 1; pointer-events: auto; }
+    .dat.open { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity .5s var(--ease), visibility 0s; }
     .dat-box { position: relative; width: min(760px, 100%); max-height: 90vh; overflow: auto; text-align: center; padding: 46px 32px 36px; border-radius: 26px; border: 1px solid rgba(255, 255, 255, .08); background: radial-gradient(ellipse at top, rgba(91, 92, 246, .18), rgba(8, 8, 20, .96) 65%); transform: scale(.96); transition: transform .6s var(--ease); }
     .dat.open .dat-box { transform: none; }
     .dat-kicker { font-family: var(--mono); font-size: 12px; letter-spacing: .25em; color: var(--muted); text-transform: uppercase; }
@@ -584,7 +582,7 @@
       <canvas id="tesseract"></canvas>
       <div class="portrait"><img src="images/face.webp" alt="" width="640" height="640" /></div>
       <span class="stage-tag t1"><i>~</i> AI Technical Lead @ Gestiion</span>
-      <span class="stage-tag t2"><i>λ</i> ex-Scale AI · San Francisco</span>
+      <span class="stage-tag t2"><i>λ</i> ex-Scale AI · remote</span>
       <span class="stage-tag t3"><i>✦</i> Astrophysics · UdeA</span>
     </div>
 
@@ -774,7 +772,7 @@
       <article class="teach-card reveal">
         <div class="teach-when">Medellín</div>
         <h3>Claude community</h3>
-        <p>Active in the local Claude builders community: sharing workflows, tooling and what works in production.</p>
+        <p>Part of the local Claude community in Medellín, where builders compare notes on agents and tooling.</p>
       </article>
       <article class="teach-card reveal">
         <div class="teach-when">Always on</div>
@@ -964,7 +962,7 @@
       stack: ['Rust', 'Tauri', 'WebAssembly'],
       status: 'private', links: [] },
     { cat: 'play', glyph: 'norm', name: 'Kosmadic', tag: 'A keyboard for a constructed language',
-      desc: 'An Android language pack for AnySoftKeyboard that types the logograms of a constructed language from a fictional universe.',
+      desc: 'An Android language pack for AnySoftKeyboard for typing a constructed language from a fictional universe.',
       stack: ['Java', 'Android'],
       status: 'private', links: [] },
 
@@ -1186,8 +1184,13 @@
       tx.fillStyle = g; tx.beginPath(); tx.arc(p.x, p.y, r * 5, 0, 6.283); tx.fill();
       tx.fillStyle = '#f4dc9c'; tx.beginPath(); tx.arc(p.x, p.y, r * .7, 0, 6.283); tx.fill();
     }
-    if (!reduceMotion) requestAnimationFrame(drawT);
+    if (!reduceMotion && tVisible) requestAnimationFrame(drawT);
   };
+  let tVisible = true;
+  new IntersectionObserver(([en]) => {
+    const was = tVisible; tVisible = en.isIntersecting;
+    if (tVisible && !was && !reduceMotion) requestAnimationFrame(drawT);
+  }).observe(tc);
   addEventListener('resize', () => { sizeT(); if (reduceMotion) drawT(); });
   sizeT(); drawT();
 
